@@ -10,18 +10,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
 
-    APIHelper retrofitApi;
+    private static Retrofit retrofit = null;
+    public static Retrofit getClient() {
 
-    public APIHelper makeRetrofitService(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.2.171/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
 
-        retrofitApi = retrofit.create(APIHelper.class);
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.androidhive.info/json/")
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
 
-        return retrofitApi;
-      }
+
 }
 
